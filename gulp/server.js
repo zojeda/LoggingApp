@@ -7,7 +7,7 @@ var nodemon = require('gulp-nodemon');
 
 var util = require('util');
 
-var middleware = require('./proxy');
+var middleware = require('./proxy')();
 
 module.exports = function(options) {
 
@@ -41,7 +41,7 @@ module.exports = function(options) {
     selector: '[ng-app]' // Only needed for angular apps
   }));
 
-  gulp.task('serve', ['watch'], function() {
+  gulp.task('serve', ['watch', 'nodemon'], function() {
     browserSyncInit([options.tmp + '/serve', options.src]);
   });
 
@@ -59,7 +59,7 @@ module.exports = function(options) {
 
   gulp.task('nodemon', function(cb) {
     return nodemon({
-      script: 'src/server.js'
+      script: 'server.js'
     }).on('start', function() {
       cb();
     });

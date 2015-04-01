@@ -6,15 +6,15 @@ var app = express();
 var router = express.Router();
 
 var options = {
-    root: __dirname + 'dist/'
-  };
+  root: __dirname + 'dist/'
+};
 
 app.use(express.static('dist'));
 app.get('/', function(req, res) {
-    res.sendFile('index.html', options);
+  res.sendFile('index.html', options);
 });
 app.get('/api/something', function(req, res) {
-    console.log(req.url);
+  res.send('hello world');
 });
 
 
