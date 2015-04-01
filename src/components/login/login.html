@@ -1,0 +1,18 @@
+<div class="login" ng-controller="LoginController">
+  <form class="login navbar-form navbar-left" role="search">
+    <div class="form-group" ng-if="!isLoggedIn">
+      <input type="text" class="form-control" ng-model="username" placeholder="Username">
+      <input type="password" class="form-control" ng-model="password" placeholder="Password">
+      <button type="submit" class="btn btn-default" ng-click="login(username, password)">Login</button>
+    </div>
+  </form>
+  <li class="dropdown" dropdown ng-if="isLoggedIn">
+    <a href="#" class="dropdown-toggle" dropdown-toggle role="button" aria-expanded="false">
+      <span class="glyphicon glyphicon-user"></span>
+      <p>{{username}}<span class="caret"></span></p>
+    </a>
+    <ul class="dropdown-menu" role="menu">
+      <li><a href="#" ng-click="logout()">Logout</a></li>
+    </ul>
+  </li>
+</div>

@@ -49,7 +49,6 @@ function proxyMiddleware(req, res, next) {
    * may be more reliable but can't be generic.
    */
   if (/(^\/api\/)/.test(req.url)) {
-    console.log('proxy: '+req.url);
     proxy.web(req, res);
   } else {
     next();

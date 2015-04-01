@@ -59,7 +59,7 @@ module.exports = function(options) {
 
   gulp.task('nodemon', function(cb) {
     return nodemon({
-      script: 'server.js'
+      script: 'server/server.js'
     }).on('start', function() {
       cb();
     });
