@@ -8,12 +8,16 @@
     <button type="submit" class="btn btn-primary" ng-click="callEvent()">Call Event</button>
   </div>
 
-  <div class="eventsView" ng-include="'components/eventsView/eventsView.html'"></div>
+</div>
 
-  <hr>
 
-  <div class="footer">
-    <p>Testing app</p>
+<div class="footer container">
+  <div dropdown class="label label-success dropup">
+    <span dropdown-toggle class="dropdown-toggle" role="button" aria-expanded="false">
+      Messages
+      <span class="badge">{{messagesCount}}</span>
+    </span>
+    <mc-messages class="dropdown-menu" role="menu"></mc-messages>
   </div>
 
 </div>

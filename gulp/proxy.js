@@ -48,7 +48,7 @@ function proxyMiddleware(req, res, next) {
    * for your needs. If you can, you could also check on a context in the url which
    * may be more reliable but can't be generic.
    */
-  if (/(^\/api\/)/.test(req.url)) {
+  if (/(^\/api\/|^\/socket\/)/.test(req.url)) {
     proxy.web(req, res);
   } else {
     next();

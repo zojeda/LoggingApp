@@ -3,13 +3,16 @@
 // simple express server
 var express = require('express');
 var app = express();
-var router = express.Router();
+var server = require('http').Server(app);
+var io = require('socket.io')(server, {
+  path: '/api/socket.io'
+});
 
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
 
+var logEntries = {};
 
 require('./oauth')(app);
+var memorystore = require('./memorystore');
 var options = {
   root: __dirname + 'dist/'
 };
@@ -20,21 +23,30 @@ app.get('/', function(req, res) {
 });
 
 
-app.use(function(req, res, next) {
-        res.header("Access-Control-Allow-Origin", "*");
-        res.header("Access-Control-Allow-Credentials", "false");
-        res.header("Access-Control-Allow-Headers", "X-Requested-With");
-        res.header("Access-Control-Allow-Headers", "Content-Type");
-        res.header("Access-Control-Allow-Methods", "PUT, GET, POST, DELETE, OPTIONS");
-        next();
-    });
-
-io.on('connection', function(socket){
-  socket.on('message', function(msg){
-    console.log(msg);
-    io.emit('response', msg);
+io.use(function(socket, next){
+  memorystore.verify(socket.handshake.query.token, function(error, decode){
+    if(error)  {
+      return next(new Error('Authentication error'));
+    } else {
+      return next();
+    }
   });
 });
 
+var logs = io//.of('/log')
+  .on('connection', function(socket) {
+    //creating a room for this username
+    socket.username = memorystore.decode(socket.handshake.query.token).user;
+    socket.join(socket.username);
+    var entries = logEntries[socket.username] || [];
+    logEntries[socket.username] = entries;
+    entries.forEach(function (data) {
+      io.sockets.in(socket.id).emit('logged', data);
+    })
+    socket.on('log', function(data) {
+      entries.push(data);
+      io.sockets.in(socket.username).emit('logged', data);
+    });
+  });
 
-app.listen(5000);
+server.listen(5000);

@@ -1,4 +1,10 @@
+
+var jwt = require('jsonwebtoken');
+
+
 var model = module.exports;
+
+var secret = 'My Super secret key';
 
 // In-memory datastores:
 var oauthAccessTokens = [],
@@ -15,8 +21,7 @@ var oauthAccessTokens = [],
     refresh_token: [
       'clientid'
     ]
-  },
-  users = [];
+  };
 
 // Debug function to dump the state of the data stores
 model.dump = function() {
@@ -24,7 +29,6 @@ model.dump = function() {
   console.log('oauthClients', oauthClients);
   console.log('authorizedClientIds', authorizedClientIds);
   console.log('oauthRefreshTokens', oauthRefreshTokens);
-  console.log('users', users);
 };
 
 /*
@@ -95,12 +99,28 @@ model.saveRefreshToken = function(refreshToken, clientId, expires, userId, callb
 model.getUser = function(username, password, callback) {
   if (username === password) {
     var elem = {
-      id: '123',
-      username: username,
-      password: password
+      id: username,
+      username: username
     }
-    users.push(elem);
     return callback(false, elem);
   }
   callback(false, false);
 };
+
+
+model.generateToken = function(type, req, callback) {
+  var username = req.body.username;
+  var tokenData = {user: username, roles: ['user']};
+  if(username.indexOf('admin') === 0) {
+    tokenData.roles.push('admin');
+  }
+  var token = jwt.sign(tokenData, secret);
+  callback(undefined, token);
+};
+
+model.verify = function(token, callback) {
+  jwt.verify(token, secret, callback);
+}
+model.decode = function(token) {
+  return jwt.verify(token, secret);
+}

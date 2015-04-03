@@ -11,12 +11,18 @@ angular.module('loggingApp', ['ui.router', 'ui.bootstrap', 'MessageCenterModule'
 
     $urlRouterProvider.otherwise('/');
   })
-  .factory('mySocket', function(socketFactory) {
-    //var myIoSocket = io.connect('/api/socket');
+  .factory('logSocket', function(socketFactory, $location, $log, $window) {
+    var notificationsEndpoint = $location.protocol()+'://'+$location.host()+':'+$location.port();
+    $log.log(notificationsEndpoint);
+    var myIoSocket = "";
+    try {
+      myIoSocket = io.connect(notificationsEndpoint, {path: '/api/socket.io', query: 'token='+$window.sessionStorage.token} );
+      var logSocket = socketFactory({
+          ioSocket: myIoSocket
+       });
 
-    // mySocket = socketFactory({
-    //   ioSocket: myIoSocket
-    // });
-    var mySocket = 'something';
-    return mySocket;
+    } catch( e ) {
+      $log.log(e);
+    }
+    return logSocket;
   });

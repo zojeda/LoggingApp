@@ -19,13 +19,11 @@ module.exports = function(app) {
     var headerToken = req.get('Authorization');
     var matches = headerToken.match(/Bearer\s(\S+)/);
     headerToken = matches[1];
-    memorystore.getAccessToken(headerToken, function(value, elem) {
-      res.send(elem.userId.username);
-    });
+    res.send(memorystore.decode(headerToken));
   });
 
   app.use(app.oauth.errorHandler());
 
-
+  var model = memorystore;
 
 }

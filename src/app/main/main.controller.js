@@ -1,12 +1,16 @@
 'use strict';
 
 angular.module('loggingApp')
-  .controller('MainCtrl', ['$scope', 'messageCenterService', 'mySocket', function($scope, messageCenterService) {
+  .controller('MainCtrl', ['$scope', 'messageCenterService', 'logSocket', function($scope, messageCenterService, logSocket) {
+    $scope.messagesCount = 0;
+    $scope.model = { name : 'my model' };
     $scope.callEvent = function() {
-      // messageCenterService.add('success', 'action completed :) !', {
-      //   status: messageCenterService.status.permanent
-      // });
-
-      mySocket.emit("message");
+      logSocket.emit('log', {type:'success', data: 'big call aa', model: $scope.model} );
     };
+    logSocket.on('logged', function (msg) {
+      messageCenterService.add(msg.type, msg.data, {
+         status: messageCenterService.status.permanent
+      });
+      $scope.messagesCount += 1;
+    });
   }]);
