@@ -1,12 +1,17 @@
 'use strict';
 
-angular.module('loggingApp', ['ui.router', 'ui.bootstrap', 'MessageCenterModule', 'btford.socket-io'])
+angular.module('loggingApp', ['ui.router', 'ui.bootstrap', 'MessageCenterModule', 'btford.socket-io', 'smart-table'])
   .config(function($stateProvider, $urlRouterProvider) {
     $stateProvider
       .state('home', {
         url: '/',
         templateUrl: 'app/main/main.html',
         controller: 'MainCtrl'
+      })
+      .state('admin', {
+        url: '/admin',
+        templateUrl: 'app/admin/admin.html',
+        controller: 'AdminCtrl'
       });
 
     $urlRouterProvider.otherwise('/');

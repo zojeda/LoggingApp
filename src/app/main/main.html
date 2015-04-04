@@ -1,23 +1,26 @@
 <div class="container">
 
-  <div ng-include="'components/navbar/navbar.html'"></div>
-
-
   <div class="main jumbotron text-center">
     <h1>Testing Logging App</h1>
-    <button type="submit" class="btn btn-primary" ng-click="callEvent()">Call Event</button>
+    <div class="input-group">
+
+      <span dropdown class="dropdown input-group-btn">
+        <span dropdown-toggle class="btn" ng-class="'btn-'+type" type="button">
+          {{type}}
+          <span class="caret"></span>
+        </span>
+        <div class="dropdown-menu" role="menu">
+          <span class="label label-info" ng-click="type='info'">info</span>
+          <span class="label label-warning" ng-click="type='warning'">warning</span>
+          <span class="label label-danger" ng-click="type='danger'">danger</span>
+          <span class="label label-success" ng-click="type='success'">success</span>
+        </div>
+      </span>
+      <input type="text" class="form-control" ng-model="message" placeholder="Event Message" />
+      <span class="input-group-btn">
+        <button class="btn btn-default" type="button" ng-click="logEvent()">Log</button>
+      </span>
+    </div>
+
   </div>
-
-</div>
-
-
-<div class="footer container">
-  <div dropdown class="label label-success dropup">
-    <span dropdown-toggle class="dropdown-toggle" role="button" aria-expanded="false">
-      Messages
-      <span class="badge">{{messagesCount}}</span>
-    </span>
-    <mc-messages class="dropdown-menu" role="menu"></mc-messages>
-  </div>
-
 </div>
