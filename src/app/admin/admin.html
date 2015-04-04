@@ -1,0 +1,22 @@
+<div class="container">
+<table st-table="loggedEvents" class="table table-striped">
+	<thead>
+	<tr>
+    <th>Severity</th>
+		<th>User</th>
+		<th>Sent</th>
+    <th>Received</th>
+		<th>Message</th>
+	</tr>
+	</thead>
+	<tbody>
+	<tr ng-repeat="row in loggedEvents">
+		<td><span class="label" ng-class="'label-'+row.type">{{row.type}}</span></td>
+		<td>{{row.user}}</td>
+		<td>{{row.sent}}</td>
+    <td>{{row.received}}</td>
+		<td>{{row.data}}</td>
+	</tr>
+	</tbody>
+</table>
+</div>
