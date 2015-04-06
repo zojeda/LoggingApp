@@ -2,5 +2,5 @@
 
 angular.module('loggingApp')
   .controller('FooterCtrl', function ($scope, messageCenterService) {
-    $scope.messageCenterService = messageCenterService;
+    $scope.mcMessages = messageCenterService.mcMessages;
   });

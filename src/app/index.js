@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('loggingApp', ['ui.router', 'ui.bootstrap', 'MessageCenterModule', 'btford.socket-io', 'smart-table'])
+angular.module('loggingApp', ['ui.router', 'ui.bootstrap', 'MessageCenterModule', 'btford.socket-io', 'smart-table', 'angular-progress-arc', 'chart.js'])
   .config(function($stateProvider, $urlRouterProvider) {
     $stateProvider
       .state('home', {
@@ -30,4 +30,9 @@ angular.module('loggingApp', ['ui.router', 'ui.bootstrap', 'MessageCenterModule'
       $log.log(e);
     }
     return logSocket;
-  });
+  })
+  .config(['progressArcDefaultsProvider', function (progressArcDefaultsProvider) {
+    progressArcDefaultsProvider
+        .setDefault('background', '#aaa')
+        .setDefault('size', 300);
+  }]);

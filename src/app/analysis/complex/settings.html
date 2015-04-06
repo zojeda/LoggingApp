@@ -1,0 +1,23 @@
+<form class="container">
+  <div class="row">
+    <div class="col-xs-3">
+      <div class="input-group">
+        <span class="input-group-addon">Portfolio</span>
+        <input type="text" class="form-control" placeholder="Portfolio" ng-model="model.dataSettings.portfolioName">
+      </div>
+    </div>
+    <div class="col-xs-3">
+      <div class="input-group">
+        <span class="input-group-addon">Risk Model</span>
+        <input type="text" class="form-control" placeholder="Risk Model" ng-model="model.dataSettings.riskModelName">
+      </div>
+    </div>
+    <div class="col-xs-3">
+      <div class="input-group">
+        <span class="input-group-addon">Benchmark</span>
+        <input type="text" class="form-control" placeholder="Benchmark" ng-model="model.dataSettings.benchmarkName">
+      </div>
+    </div>
+    <button type="button" class="btn btn-primary" ng-click="analyze()">Analyze</button>
+  </div>
+</form>

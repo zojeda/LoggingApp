@@ -5,7 +5,7 @@ angular.module('loggingApp')
     $scope.loggedEvents = [];
 
     logSocket.on('logCollected', function (logData) {
-      $scope.loggedEvents.push(logData);
+      $scope.loggedEvents.unshift(logData);
     });
 
     $scope.init = function() {
