@@ -2,12 +2,15 @@
 
 // simple express server
 var express = require('express');
+var express = require('express');
 var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server, {
   path: '/api/socket.io'
 });
 
+
+var q = require('q');
 
 var allLogEntries = [];
 require('./oauth')(app);
@@ -32,7 +35,37 @@ io.use(function(socket, next){
   });
 });
 
-var logs = io//.of('/log')
+var calqPie = function(progress, progressRoom, processKey) {
+  if(progress<=100) {
+    q.delay(1000).then(function() {
+      processes[processKey] = processes[processKey] || {};
+      processes[processKey].progress = progress;
+      var progressData = {progress: progress, info: (progress<50) ? "calculating" : "post processing"};
+      console.log(progressData);
+      io.sockets.in(progressRoom).emit('progress', progressData);
+      calqPie(progress+5, progressRoom, processKey);
+    });
+  }
+}
+var process_pie = function(requestData, socket){
+    var processKey = requestData.request;
+    var progressRoom = 'progress';
+    console.log(progressRoom);
+    socket.join(progressRoom);
+    calqPie(0, progressRoom, requestData);
+};
+
+var processes = {};
+function handleProcessRequests(socket) {
+  socket.on('process', function(requestData) {
+    console.log(processes);
+    process_pie(requestData, socket);
+    console.log(processes);
+    //io.sockets(requestData).emit('data', requestData);
+  });
+};
+
+io//.of('/log')
   .on('connection', function(socket) {
     //creating a room for this username
     socket.userData = memorystore.decode(socket.handshake.query.token);
@@ -44,6 +77,7 @@ var logs = io//.of('/log')
     })
     //adding to admins room so we can broadcast all events to that room
     if(socket.userData.roles.indexOf('admin')>=0) {
+      console.log('adding admin');
       socket.join('admins');
       socket.on('collectLogs', function(data) {
         allLogEntries.forEach(function (data) {
@@ -52,6 +86,7 @@ var logs = io//.of('/log')
       });
     };
 
+    handleProcessRequests(socket);
     socket.on('log', function(data) {
       data.received = new Date();
       data.user = socket.userData.user

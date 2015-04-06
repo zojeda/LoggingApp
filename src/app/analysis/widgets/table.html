@@ -1,2 +1,17 @@
-<span> Table </span>
-Portfolio: {{model.dataSettings.portfolioName}} en Table
+<div ng-controller='TableCtrl'>
+  <span class="label label-default">Table</span>
+  <table st-table="tableEntries" class="table table-striped">
+  	<thead>
+  	<tr>
+      <th>--</th>
+      <th>{{model.dataSettings.portfolioName}}</th>
+  	</tr>
+  	</thead>
+  	<tbody>
+  	<tr ng-repeat="row in tableEntries">
+  		<td>{{row.name}}</td>
+  		<td>{{row.value}}</td>
+  	</tr>
+  	</tbody>
+  </table>
+</div>

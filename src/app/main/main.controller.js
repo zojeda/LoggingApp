@@ -1,11 +1,11 @@
 'use strict';
 
 angular.module('loggingApp')
-  .controller('MainCtrl', ['$scope', 'messageCenterService', 'logSocket', '$state', function($scope, messageCenterService, logSocket, $state) {
+  .controller('MainCtrl', ['$scope', 'messageCenterService', 'socketio', '$state', function($scope, messageCenterService, socketio, $state) {
     $scope.logEvent = function() {
-      logSocket.emit('log', {type: $scope.type, sent: new Date(), data: $scope.message, return: $state.current.name} );
+      socketio.emit('log', {type: $scope.type, sent: new Date(), data: $scope.message} );
     };
-    logSocket.on('logged', function (msg) {
+    socketio.on('logged', function (msg) {
       messageCenterService.add(msg.type, msg.data, {
          status: messageCenterService.status.permanent,
          html: true

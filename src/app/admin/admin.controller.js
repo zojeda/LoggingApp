@@ -1,15 +1,15 @@
 'use strict';
 
 angular.module('loggingApp')
-  .controller('AdminCtrl', ['$scope', 'logSocket', function($scope, logSocket) {
+  .controller('AdminCtrl', ['$scope', 'socketio', function($scope, socketio) {
     $scope.loggedEvents = [];
 
-    logSocket.on('logCollected', function (logData) {
+    socketio.on('logCollected', function (logData) {
       $scope.loggedEvents.unshift(logData);
     });
 
     $scope.init = function() {
-      logSocket.emit('collectLogs');
+      socketio.emit('collectLogs');
     };
     $scope.init();
   }]);

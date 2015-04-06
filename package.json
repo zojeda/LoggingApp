@@ -6,6 +6,7 @@
     "express": "^4.12.3",
     "jsonwebtoken": "^4.2.2",
     "node-oauth2-server": "^2.2.2",
+    "q": "^1.2.0",
     "socket.io": "^1.3.5"
   },
   "scripts": {

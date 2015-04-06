@@ -1,4 +1,13 @@
 <div ng-controller='PieChartCtrl'>
   <span class="label label-default">Pie Chart</span>
-  <canvas id="pie" class="chart chart-pie" data="data" labels="labels"></canvas>
+
+  <div class="chart progressInfo" ng-if="inProgress">
+    <div class="description"><strong>{{progressMessage}} {{progress}}%</strong></div>
+    <progress-arc
+      size="130" complete="progress/100"
+      stroke="rgba(141,197,215,1)" stroke-width="30"
+      >
+    </progress-arc>
+  </div>
+  <canvas ng-if="!inProgress" class="chart chart-pie" data="data" labels="labels"></canvas>
 </div>

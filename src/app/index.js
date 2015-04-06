@@ -16,20 +16,20 @@ angular.module('loggingApp', ['ui.router', 'ui.bootstrap', 'MessageCenterModule'
 
     $urlRouterProvider.otherwise('/');
   })
-  .factory('logSocket', function(socketFactory, $location, $log, $window) {
+  .factory('socketio', function(socketFactory, $location, $log, $window) {
     var notificationsEndpoint = $location.protocol()+'://'+$location.host()+':'+$location.port();
     $log.log(notificationsEndpoint);
-    var myIoSocket = "";
+    var myIoSocket = '';
     try {
-      myIoSocket = io.connect(notificationsEndpoint, {path: '/api/socket.io', query: 'token='+$window.sessionStorage.token} );
-      var logSocket = socketFactory({
-          ioSocket: myIoSocket
+      var socket = io.connect(notificationsEndpoint, {path: '/api/socket.io', query: 'token='+$window.sessionStorage.token} );
+      myIoSocket = socketFactory({
+          ioSocket: socket
        });
 
     } catch( e ) {
       $log.log(e);
     }
-    return logSocket;
+    return myIoSocket;
   })
   .config(['progressArcDefaultsProvider', function (progressArcDefaultsProvider) {
     progressArcDefaultsProvider

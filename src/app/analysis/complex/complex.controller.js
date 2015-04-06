@@ -5,6 +5,7 @@ angular.module('loggingApp')
     $scope.model = $stateParams.model;
 
     $scope.analyze = function() {
+      $scope.$broadcast('analyze');
       var msg = {
         type: "success",
         data: "try",
