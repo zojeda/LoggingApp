@@ -40,6 +40,7 @@
       };
       promise.onAllDataReady = function(fn) {
         promise.then(function(data) {
+          console.log('emiting  onAllDataReady' +data.length);
           fn(data);
         });
         return promise;
@@ -59,8 +60,8 @@
         }
       }
       var collectedData = [];
+      var expectedDataLenght = undefined;
       socketio.on('processMessages', function(messages) {
-        socketio.removeAllListeners('processMessages');
         if(JSON.stringify(messages.request)==JSON.stringify(requestData.request))  {
           socketio.on(messages.progress, function(progressData) {
             deferred.notify(progressData);
@@ -72,13 +73,26 @@
                 collectedData[data[i].id] = data[i];
               }
             }
+            if(collectedData.length === expectedDataLenght) {
+              socketio.removeAllListeners(messages.data);
+              socketio.removeAllListeners(messages.progress);
+              deferred.resolve(collectedData);
+            }
+
+            if(expectedDataLenght && collectedData.length != expectedDataLenght) {
+              socketio.emit(messages.get_data); //FIXME: only take into account missing values
+            }
 
           });
-          socketio.on(messages.data_ready, function() {
-            if (collectedData.length > 0) { //FIXME: take into account missing values
+          socketio.on(messages.data_ready, function(dataLength) {
+            socketio.removeAllListeners(messages.data_ready);
+            expectedDataLenght = dataLength;
+            if (collectedData.length == expectedDataLenght) {
+              socketio.removeAllListeners(messages.data);
+              socketio.removeAllListeners(messages.progress);
               deferred.resolve(collectedData);
             } else {
-              //socketio.emit(messages.get_data);
+              socketio.emit(messages.get_data); //FIXME: only take into account missing values
             }
 
           });

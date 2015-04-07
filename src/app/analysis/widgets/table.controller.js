@@ -1,32 +1,22 @@
 (function(module) {
   'use strict';
-  module.controller('TableCtrl', function ($scope) {
+  module.controller('TableCtrl', function($scope, processCallService) {
     $scope.$on('analyze', function(event) {
-      $scope.tableEntries = [
-        {name: "val1", value: 10},
-        {name: "val2", value: 15},
-        {name: "val3", value: 3},
-        {name: "val4", value: 7},
-        {name: "val4", value: 7},
-        {name: "val4", value: 7},
-        {name: "val4", value: 7},
-        {name: "val4", value: 7},
-        {name: "val4", value: 7},
-        {name: "val4", value: 7},
-        {name: "val4", value: 7},
-        {name: "val4", value: 7},
-        {name: "val4", value: 7},
-        {name: "val4", value: 7},
-        {name: "val4", value: 7},
-        {name: "val4", value: 7},
-        {name: "val4", value: 7},
-        {name: "val4", value: 7},
-        {name: "val4", value: 7},
-        {name: "val4", value: 7},
-        {name: "val4", value: 7},
-        {name: "val4", value: 7},
-      ];
+
+      $scope.tableEntries = [];
+
+      var request = {
+        name: "table",
+        params: $scope.model.dataSettings
+      };
+
+      processCallService.process(request)
+        .onData(function(data) {
+          for (var i = 0; i < data.length; i++) {
+            $scope.tableEntries[data[i].id] = data[i];
+          }
+        });
     });
 
-});
+  });
 }(angular.module("loggingApp")));

@@ -35,33 +35,33 @@ io.use(function(socket, next) {
   });
 });
 
-var calqPie = function(progress, id, processKey, messages) {
+var calqPie = function(progress, id, reqName, processKey, messages) {
   var progressData = {
     progress: progress,
     info: (progress < 50) ? "calculating" : "post processing"
   };
-  var data = [{
+  var data = {
     id: id,
-    name: 'val_' + progress,
+    name: reqName+ '_' + progress,
     value: Math.random() * 10
-  }];
+  };
   processes[processKey].progress = progress;
   processes[processKey].data = processes[processKey].data || [];
-  processes[processKey].data.push(progress);
+  processes[processKey].data.push(data);
 
   io.sockets.in(processKey).emit(messages.progress, progressData);
-  io.sockets.in(processKey).emit(messages.data, data);
+  io.sockets.in(processKey).emit(messages.data, [data]);
   var nextProgress = progress + 5;
   if (nextProgress <= 100) {
     process.nextTick(function() {
-      q.delay(10).then(function() {
-        calqPie(nextProgress, id+1, processKey, messages);
+      q.delay(1000).then(function() {
+        calqPie(nextProgress, id+1, reqName, processKey, messages);
       });
     });
   } else {
     //completePie;
     processes[processKey].progress = 100;
-    io.sockets.in(processKey).emit(messages.data_ready);
+    io.sockets.in(processKey).emit(messages.data_ready, processes[processKey].data.length);
     var redirects = processes[processKey].onCompletedRedirect;
     for (var key in redirects) {
       io.sockets.in(key).emit('completed_process', {
@@ -95,7 +95,7 @@ var process_pie = function(requestData, socket) {
   socket.join(processKey);
   socket.on(messages.start, function() {
     socket.on(messages.get_data, function(slice) {
-      var slice = slice || {start: 0, end: null};
+      var slice = slice || {start: 0, end: undefined};
       socket.emit(messages.data, processes[processKey].data.slice(slice.start || 0, slice.end));
     });
 
@@ -103,10 +103,10 @@ var process_pie = function(requestData, socket) {
     if(processes[processKey].data) {
       socket.emit(messages.data, processes[processKey].data);
       if(processes[processKey].progress==100) {
-        socket.emit(messages.data_ready);
+        socket.emit(messages.data_ready, processes[processKey].data.length);
       }
     } else { // no data calculated with these parameters
-      calqPie(0, 0, processKey, messages);
+      calqPie(0, 0, requestData.request.name, processKey, messages);
     }
   });
 };
@@ -116,7 +116,6 @@ var processes = {};
 function handleProcessRequests(socket) {
   socket.on('process', function(requestData) {
     process_pie(requestData, socket);
-    //io.sockets(requestData).emit('data', requestData);
   });
 };
 
