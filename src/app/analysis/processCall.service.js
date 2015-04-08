@@ -1,9 +1,10 @@
 (function(module) {
   'use strict';
 
-  function ProcessCallService(socketio, $q, $state, messageCenterService) {
+  function ProcessCallService(socketio, $q, $state, $rootScope, messageCenterService) {
 
     socketio.on('completed_process', function(completedData) {
+      console.log('complete_process');
       var redirection = completedData.onCompletedRedirect;
 
       messageCenterService.add(completedData.type, redirection.message, {
@@ -74,6 +75,7 @@
               }
             }
             if(collectedData.length === expectedDataLenght) {
+              socketio.removeAllListeners(messages.data_ready);
               socketio.removeAllListeners(messages.data);
               socketio.removeAllListeners(messages.progress);
               deferred.resolve(collectedData);
@@ -85,9 +87,9 @@
 
           });
           socketio.on(messages.data_ready, function(dataLength) {
-            socketio.removeAllListeners(messages.data_ready);
             expectedDataLenght = dataLength;
             if (collectedData.length == expectedDataLenght) {
+              socketio.removeAllListeners(messages.data_ready);
               socketio.removeAllListeners(messages.data);
               socketio.removeAllListeners(messages.progress);
               deferred.resolve(collectedData);
@@ -96,15 +98,13 @@
             }
 
           });
-
           socketio.emit(messages.start);
         }
       });
-
 
       socketio.emit('process', requestData);
       return promise;
     }
   }
-  module.service('processCallService', ['socketio', '$q', '$state', 'messageCenterService', ProcessCallService]);
+  module.service('processCallService', ['socketio', '$q', '$state', '$rootScope', 'messageCenterService', ProcessCallService]);
 }(angular.module("loggingApp")));

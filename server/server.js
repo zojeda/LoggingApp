@@ -54,7 +54,7 @@ var calqPie = function(progress, id, reqName, processKey, messages) {
   var nextProgress = progress + 5;
   if (nextProgress <= 100) {
     process.nextTick(function() {
-      q.delay(1000).then(function() {
+      q.delay(30+1000*Math.random()).then(function() {
         calqPie(nextProgress, id+1, reqName, processKey, messages);
       });
     });
@@ -64,6 +64,7 @@ var calqPie = function(progress, id, reqName, processKey, messages) {
     io.sockets.in(processKey).emit(messages.data_ready, processes[processKey].data.length);
     var redirects = processes[processKey].onCompletedRedirect;
     for (var key in redirects) {
+      console.log('sending completed process to : ' + key);
       io.sockets.in(key).emit('completed_process', {
         type: "success",
         onCompletedRedirect: redirects[key]
@@ -94,6 +95,7 @@ var process_pie = function(requestData, socket) {
   socket.emit('processMessages', messages);
   socket.join(processKey);
   socket.on(messages.start, function() {
+    socket.setMaxListeners(0);
     socket.on(messages.get_data, function(slice) {
       var slice = slice || {start: 0, end: undefined};
       socket.emit(messages.data, processes[processKey].data.slice(slice.start || 0, slice.end));
@@ -119,6 +121,7 @@ function handleProcessRequests(socket) {
   });
 };
 
+io.sockets.setMaxListeners(0);
 io //.of('/log')
   .on('connection', function(socket) {
   //creating a room for this username
