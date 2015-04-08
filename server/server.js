@@ -54,7 +54,7 @@ var calqPie = function(progress, id, reqName, processKey, messages) {
   var nextProgress = progress + 5;
   if (nextProgress <= 100) {
     process.nextTick(function() {
-      q.delay(30+1000*Math.random()).then(function() {
+      q.delay(60+1000*Math.random()).then(function() {
         calqPie(nextProgress, id+1, reqName, processKey, messages);
       });
     });

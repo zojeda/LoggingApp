@@ -1,23 +1,8 @@
 (function(module) {
   'use strict';
 
-  function ProcessCallService(socketio, $q, $state, $rootScope, messageCenterService) {
+  function ProcessCallService(socketio, $q, $state, messageCenterService) {
 
-    socketio.on('completed_process', function(completedData) {
-      console.log('complete_process');
-      var redirection = completedData.onCompletedRedirect;
-
-      messageCenterService.add(completedData.type, redirection.message, {
-        status: messageCenterService.status.permanent,
-        html: true,
-        addons: {
-          go: function() {
-            $state.go("home");
-            $state.go(redirection.stateName, redirection.stateParams);
-          }
-        }
-      });
-    });
 
     this.process = function(request, completedMessage, scope) {
       var deferred = $q.defer();
@@ -106,5 +91,5 @@
       return promise;
     }
   }
-  module.service('processCallService', ['socketio', '$q', '$state', '$rootScope', 'messageCenterService', ProcessCallService]);
+  module.service('processCallService', ['socketio', '$q', '$state', 'messageCenterService', ProcessCallService]);
 }(angular.module("loggingApp")));
