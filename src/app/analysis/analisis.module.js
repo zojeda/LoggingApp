@@ -21,12 +21,15 @@
               riskModelName: ''
             },
             widgets: [
-              'app/analysis/widgets/table.html',
-              'app/analysis/widgets/pieChart.html',
-              'app/analysis/widgets/lineChart.html'
+              {name: 'app/analysis/widgets/table.html', size: { x: 2, y: 1 }, position:  { col: 0, row: 0 }},
+              {name: 'app/analysis/widgets/pieChart.html', size: { x: 2, y: 2 }, position:  { col: 2, row: 0 }},
+              {name: 'app/analysis/widgets/lineChart.html', size: { x: 2, y: 1 }, position:  { col: 0, row: 1 }}
             ]
           }
         }
       });
   });
-}(angular.module("loggingApp")));
+}(angular.module("analysis", [
+    'ui.router',
+    'smart-table', 'angular-progress-arc', 'chart.js', 'gridster'
+])));

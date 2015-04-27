@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('loggingApp', ['ui.router', 'ui.bootstrap', 'MessageCenterModule', 'btford.socket-io', 'smart-table', 'angular-progress-arc', 'chart.js'])
+angular.module('loggingApp', ['ui.router', 'ui.bootstrap', 'MessageCenterModule', 'btford.socket-io', 'smart-table', 'analysis'])
   .config(function($stateProvider, $urlRouterProvider) {
     $stateProvider
       .state('home', {
