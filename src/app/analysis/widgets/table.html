@@ -1,17 +1,14 @@
-<div ng-controller='TableCtrl'>
-  <span class="label label-default">Table</span>
-  <table st-table="tableEntries" class="table table-striped">
-  	<thead>
-  	<tr>
+<table st-table="tableEntries" class="table table-striped" ng-controller='TableCtrl'>
+  <thead>
+    <tr>
       <th>--</th>
       <th>{{model.dataSettings.portfolioName}}</th>
-  	</tr>
-  	</thead>
-  	<tbody>
-  	<tr ng-repeat="row in tableEntries">
-  		<td>{{row.name}}</td>
-  		<td>{{row.value}}</td>
-  	</tr>
-  	</tbody>
-  </table>
-</div>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="row in tableEntries">
+      <td>{{row.name}}</td>
+      <td>{{row.value}}</td>
+    </tr>
+  </tbody>
+</table>
