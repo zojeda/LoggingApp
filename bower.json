@@ -6,12 +6,17 @@
     "bootstrap": "~3.3.1",
     "angular-bootstrap": "~0.12.0",
     "angular": "~1.3.4",
-    "message-center": "~1.1.4",
+    "message-center": "zojeda/message-center#master",
     "angular-socket-io": "~0.7.0",
     "angular-smart-table": "~2.0.1",
     "angular-progress-arc": "~1.0.0",
     "angular-chart.js": "~0.6.0",
     "angular-gridster": "~0.13.2"
+  },
+  "overrides": {
+    "angular-dragdrop": {
+      "main": "src/angular-dragdrop.min.js"
+    }
   },
   "devDependencies": {
     "angular-mocks": "~1.3.4"

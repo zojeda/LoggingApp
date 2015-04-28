@@ -19,4 +19,4 @@
     });
 
   });
-}(angular.module("loggingApp")));
+}(angular.module("analysis")));

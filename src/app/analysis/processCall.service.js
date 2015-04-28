@@ -92,4 +92,4 @@
     }
   }
   module.service('processCallService', ['socketio', '$q', '$state', 'messageCenterService', ProcessCallService]);
-}(angular.module("loggingApp")));
+}(angular.module("analysis")));

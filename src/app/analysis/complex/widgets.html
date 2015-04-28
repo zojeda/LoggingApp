@@ -1,8 +1,9 @@
-<div gridster class="container">
+<div gridster class="container" ng-drop="true" >
   <div gridster-item class="widget" ng-repeat="widget in model.widgets"
     row="widget.position.row" col="widget.position.col"
     size-x="widget.size.x" size-y="widget.size.y" >
-    <div ng-include="widget.name"></div>
+
+    <div ng-include="widget.template"></div>
   </div>
 
 </div>
