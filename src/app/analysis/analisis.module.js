@@ -18,15 +18,20 @@
             dataSettings: {
               portfolioName: '',
               benchmarkName: '',
-              riskModelName: ''
+              riskModelName: '',
+              date: '2015-05-01'
             },
-            widgets: [
-            ]
+            widgets: []
           }
         }
       });
   });
+
+  module.run(['gridsterConfig', function(gridsterConfig) {
+    gridsterConfig.rowHeight = 50;
+  }]);
+
 }(angular.module("analysis", [
-    'ui.router', 
-    'smart-table', 'angular-progress-arc', 'chart.js', 'gridster'
+  'ui.router',
+  'smart-table', 'angular-progress-arc', 'chart.js', 'gridster'
 ])));

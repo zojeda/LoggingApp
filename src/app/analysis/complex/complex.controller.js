@@ -32,7 +32,7 @@
       icon: "app/analysis/widgets/table_icon.png",
       defaultSize: {
         x: 2,
-        y: 2
+        y: 8
       }
     }, {
       name: "Pie Chart",
@@ -40,7 +40,7 @@
       icon: "app/analysis/widgets/pie_chart.png",
       defaultSize: {
         x: 2,
-        y: 2
+        y: 6
       }
     }, {
       name: "Line Chart",
@@ -48,7 +48,7 @@
       icon: "app/analysis/widgets/line_chart.png",
       defaultSize: {
         x: 2,
-        y: 1
+        y: 6
       }
     }, ];
 
