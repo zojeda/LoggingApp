@@ -1,6 +1,7 @@
 (function(module) {
   'use strict';
-  module.controller('LineChartCtrl', function($scope, processCallService) {
+  module.controller('LineChartCtrl', function($scope, $timeout, processCallService) {
+    self = this;
 
     $scope.onClick = function(points, evt) {
       console.log(points, evt);
@@ -11,6 +12,7 @@
       $scope.data = [
         []
       ];
+      $scope.withData = false;
 
       var request = {
         name: "line",
@@ -19,13 +21,30 @@
 
       processCallService.process(request)
         .onData(function(data) {
-          for (var i = 0; i < data.length; i++) {
-            $scope.labels[data[i].id] = data[i].name;
-            $scope.data[0][data[i].id] = data[i].value;
-          }
+          self.updateData(data);
+        })
+        .onAllDataReady(function(data) {
+          $scope.labels = [];
+          $scope.data = [
+            []
+          ];
+          self.updateData(data);
         });
       $scope.series = [$scope.model.dataSettings.portfolioName];
 
     });
+
+    this.updateData = function(data) {
+      $timeout(function() {
+        for (var i = 0; i < data.length; i++) {
+          $scope.labels[data[i].id] = data[i].name;
+          $scope.data[0][data[i].id] = data[i].value;
+        }
+        $scope.series = [$scope.model.dataSettings.portfolioName];
+        $scope.withData = true;
+        $scope.$apply();
+      }, 100);
+    };
+
   });
-}(angular.module("loggingApp")));
+}(angular.module("analysis")));

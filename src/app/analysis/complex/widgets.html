@@ -1,7 +1,7 @@
 <div gridster class="container fullWidth">
   <div>
     <div gridster-item  ng-repeat="widget in model.widgets" row="widget.position.row" col="widget.position.col" size-x="widget.size.x" size-y="widget.size.y">
-      <div class="box" ng-controller="WidgetCotroller">
+      <div class="box" ng-controller="WidgetController">
         <div class="box-header">
         {{ widget.name }}
           <div class="box-header-btns pull-right">
@@ -10,9 +10,8 @@
             <a title="Remove widget" ng-click="remove(widget)"><i class="glyphicon glyphicon-trash"></i></a>
           </div>
         </div>
-
         <div class="box-content" >
-          <div ng-include="widget.name" class="widget" ng-style="{height: gridsterItem.getElementSizeY()-40+'px'}"></div>
+          <div ng-include="widget.template" class="widget" ng-style="{height: gridsterItem.getElementSizeY()-40+'px'}"></div>
         </div>
       </div>
     </div>

@@ -1,29 +1,7 @@
 'use strict';
-angular.module('loggingApp').controller('WidgetSettingsCtrl', ['$scope', '$timeout', '$rootScope', '$modalInstance', 'widget',
+angular.module('analysis').controller('WidgetSettingsCtrl', ['$scope', '$timeout', '$rootScope', '$modalInstance', 'widget',
 	function($scope, $timeout, $rootScope, $modalInstance, widget) {
-		$scope.widget = widget;
 
-		$scope.form = {
-			name: widget.name,
-			sizeX: widget.sizeX,
-			sizeY: widget.sizeY,
-			col: widget.col,
-			row: widget.row
-		};
-
-		$scope.sizeOptions = [{
-			id: '1',
-			name: '1'
-		}, {
-			id: '2',
-			name: '2'
-		}, {
-			id: '3',
-			name: '3'
-		}, {
-			id: '4',
-			name: '4'
-		}];
 
 		$scope.dismiss = function() {
 			$modalInstance.dismiss();

@@ -1,5 +1,5 @@
 'use strict';
-angular.module('loggingApp').controller('WidgetCotroller', ['$scope', '$modal',
+angular.module('analysis').controller('WidgetController', ['$scope', '$modal',
 	function($scope, $modal) {
 
 		$scope.remove = function(widget) {
