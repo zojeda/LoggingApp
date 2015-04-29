@@ -15,6 +15,7 @@
           $scope.progressMessage = progressData.info;
         })
         .onAllDataReady(function(data){
+          $timeout(function() {
             $scope.inProgress = false;
             $scope.labels = $scope.labels || [];
             $scope.data = $scope.data || [];
@@ -22,6 +23,8 @@
               $scope.labels[data[i].id] = data[i].name;
               $scope.data[data[i].id] = data[i].value;
             }
+            $scope.$apply();
+          }, 100);
         });
     });
   });

@@ -10,8 +10,7 @@ angular.module('loggingApp')
         $scope.displayMessages='none';
       }
     }
-    socketio.on('completed_process', function(completedData) {
-      console.log('complete_process');
+    socketio.on('analysis_completed_process_notification', function(completedData) {
       var redirection = completedData.onCompletedRedirect;
 
       messageCenterService.add(completedData.type, redirection.message, {

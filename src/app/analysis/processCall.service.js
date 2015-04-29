@@ -26,23 +26,23 @@
 
     socketio.on(messages.in.analysis_data_progress, function(progress) {
       var key = JSON.stringify(progress.request);
-      listeners[key].forEach(function(deferred) {
-        deferred.notify(progress.progressData);
+      listeners[key].forEach(function(listener) {
+        listener.progress(progress.progressData);
       });
     });
 
     socketio.on(messages.in.analysis_data, function(data) {
       var key = JSON.stringify(data.request);
-      listeners[key].forEach(function(deferred) {
-        deferred.newData(data.data);
+      listeners[key].forEach(function(listener) {
+        listener.newData(data.data);
       });
 
     });
 
     socketio.on(messages.in.analysis_all_data_ready, function(dataReady) {
       var key = JSON.stringify(dataReady.request);
-      listeners[key].forEach(function(deferred) {
-        deferred.dataReady(dataReady.data_length);
+      listeners[key].forEach(function(listener) {
+        listener.dataReady(dataReady.data_length);
       });
       listeners[key] = [];
     });
@@ -71,6 +71,10 @@
 
       deferred.requestData = requestData;
       this.addListener(deferred);
+
+      deferred.progress = function(progressData) {
+        deferred.notify(progressData);
+      };
 
       deferred.newData = function(data) {
         deferred.notify(data);

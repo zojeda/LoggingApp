@@ -28,7 +28,12 @@
           $scope.data = [
             []
           ];
-          self.updateData(data);
+          $scope.withData = false;
+          $timeout(function() {
+            self.updateData(data);
+            $scope.$apply();
+          }, 100);
+
         });
       $scope.series = [$scope.model.dataSettings.portfolioName];
 
