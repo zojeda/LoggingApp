@@ -35,15 +35,12 @@
     });
 
     this.updateData = function(data) {
-      $timeout(function() {
-        for (var i = 0; i < data.length; i++) {
-          $scope.labels[data[i].id] = data[i].name;
-          $scope.data[0][data[i].id] = data[i].value;
-        }
-        $scope.series = [$scope.model.dataSettings.portfolioName];
-        $scope.withData = true;
-        $scope.$apply();
-      }, 100);
+      for (var i = 0; i < data.length; i++) {
+        $scope.labels[data[i].id] = data[i].name;
+        $scope.data[0][data[i].id] = data[i].value;
+      }
+      $scope.series = [$scope.model.dataSettings.portfolioName];
+      $scope.withData = true;
     };
 
   });
