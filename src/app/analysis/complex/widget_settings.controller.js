@@ -8,7 +8,7 @@ angular.module('analysis').controller('WidgetSettingsCtrl', ['$scope', '$timeout
 		};
 
 		$scope.remove = function() {
-			$scope.dashboard.widgets.splice($scope.dashboard.widgets.indexOf(widget), 1);
+			$scope.model.widgets.splice($scope.model.widgets.indexOf(widget), 1);
 			$modalInstance.close();
 		};
 

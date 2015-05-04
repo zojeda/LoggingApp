@@ -17,6 +17,7 @@
       var newWidget = {
         name: widgetData.name,
         template: widgetData.template,
+        settingsTemplate: widgetData.settingsTemplate,
         size: {
           x: widgetData.defaultSize.x,
           y: widgetData.defaultSize.y
@@ -29,6 +30,7 @@
     $scope.palette = [{
       name: "Table",
       template: "app/analysis/widgets/table.html",
+      settingsTemplate: "app/analysis/widgets/table_settings.html",
       icon: "app/analysis/widgets/table_icon.png",
       defaultSize: {
         x: 2,
@@ -37,6 +39,7 @@
     }, {
       name: "Pie Chart",
       template: "app/analysis/widgets/pieChart.html",
+      settingsTemplate:"app/analysis/widgets/pieChart_settings.html",
       icon: "app/analysis/widgets/pie_chart.png",
       defaultSize: {
         x: 2,
@@ -45,6 +48,7 @@
     }, {
       name: "Line Chart",
       template: "app/analysis/widgets/lineChart.html",
+      settingsTemplate:"app/analysis/widgets/lineChart_settings.html",
       icon: "app/analysis/widgets/line_chart.png",
       defaultSize: {
         x: 2,
