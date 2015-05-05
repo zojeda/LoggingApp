@@ -1,6 +1,19 @@
 (function(module) {
   'use strict';
   module.controller('PieChartCtrl', function($scope, $state, $timeout, processCallService) {
+    $scope.chartConfig = {
+      options: {
+        chart: {
+          type: 'pie'
+        }
+      },
+      series: [{ data: [] }],
+      title: {
+        text: 'Hello'
+      },
+      loading: false
+    };
+
     $scope.$on('analyze', function(event) {
       $scope.progress = 0;
       var request = {
@@ -14,14 +27,12 @@
           $scope.progress = progressData.progress;
           $scope.progressMessage = progressData.info;
         })
-        .onAllDataReady(function(data){
+        .onAllDataReady(function(data) {
+          $scope.chartConfig.series = [{data: []}];
           $timeout(function() {
             $scope.inProgress = false;
-            $scope.labels = $scope.labels || [];
-            $scope.data = $scope.data || [];
-            for(var i=0; i<data.length; i++) {
-              $scope.labels[data[i].id] = data[i].name;
-              $scope.data[data[i].id] = data[i].value;
+            for (var i = 0; i < data.length; i++) {
+              $scope.chartConfig.series[0].data[i] = [data[i].name, data[i].value]
             }
             $scope.$apply();
           }, 100);

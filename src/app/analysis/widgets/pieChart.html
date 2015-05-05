@@ -7,5 +7,5 @@
       >
     </progress-arc>
   </div>
-  <canvas ng-if="!inProgress" class="chart chart-pie" data="data" labels="labels"></canvas>
+  <highchart ng-if="!inProgress" id="piechart" config="chartConfig" class="span10"></highchart>
 </div>

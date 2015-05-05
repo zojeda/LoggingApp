@@ -2,11 +2,27 @@
   'use strict';
   module.controller('LineChartCtrl', function($scope, $timeout, processCallService) {
     self = this;
-
-    $scope.onClick = function(points, evt) {
-      console.log(points, evt);
+    $scope.chartConfig = {
+      options: {
+        chart: {
+          zoomType: 'x'
+        },
+        rangeSelector: {
+          enabled: true
+        },
+        navigator: {
+          enabled: true
+        }
+      },
+      series: [{
+        id: 1,
+        data: []
+      }],
+      title: {
+        text: 'Hello'
+      },
+      useHighStocks: true
     };
-
     $scope.$on('analyze', function(event) {
       $scope.labels = [];
       $scope.data = [
@@ -24,11 +40,12 @@
           self.updateData(data);
         })
         .onAllDataReady(function(data) {
-          $scope.labels = [];
-          $scope.data = [
-            []
-          ];
           $scope.withData = false;
+          $scope.chartConfig.series = [{
+            id: 1,
+            data: []
+          }],
+
           $timeout(function() {
             self.updateData(data);
             $scope.$apply();
@@ -41,8 +58,9 @@
 
     this.updateData = function(data) {
       for (var i = 0; i < data.length; i++) {
-        $scope.labels[data[i].id] = data[i].name;
-        $scope.data[0][data[i].id] = data[i].value;
+        var time = new Date(2010, 9, data[i].id).getTime();
+        var value = data[i].value;
+        $scope.chartConfig.series[0].data.push([time, value]);
       }
       $scope.series = [$scope.model.dataSettings.portfolioName];
       $scope.withData = true;
