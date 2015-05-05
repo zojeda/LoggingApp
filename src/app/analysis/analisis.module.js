@@ -34,6 +34,7 @@
   }])
   module.run(['gridsterConfig', function(gridsterConfig) {
     gridsterConfig.rowHeight = 50;
+    gridsterConfig.draggable.handle =".box-header";
   }]);
 
 }(angular.module("analysis", [
