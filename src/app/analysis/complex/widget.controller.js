@@ -7,9 +7,10 @@ angular.module('analysis').controller('WidgetController', ['$scope', '$modal',
 		};
 
 		$scope.openSettings = function(widget) {
+			console.log(widget);
 			$modal.open({
 				scope: $scope,
-				templateUrl: 'demo/dashboard/widget_settings.html',
+				templateUrl: widget.settingsTemplate,
 				controller: 'WidgetSettingsCtrl',
 				resolve: {
 					widget: function() {
