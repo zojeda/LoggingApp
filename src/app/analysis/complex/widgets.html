@@ -11,9 +11,13 @@
           </div>
         </div>
         <div class="box-content">
-          <div ng-include="widget.template" class="widget" ng-style="{height: gridsterItem.getElementSizeY()-50+'px'}"></div>
+          <div ng-include="widget.template" class="widget" ng-style="{height: widgetContentHeight+'px'}"></div>
           <div class="box-header" ng-style="{height: '20px', bottom:'3px', width:'100%'}">
-            Portfolio: Port1       Benchmark: Bench1         RiskModel: Risk1
+                {{  widgetFullWidth }} -
+                {{widgetFullHeight }} -
+
+                {{widgetContentWidth }} -
+                {{	widgetContentHeight }}
           </div>
         </div>
       </div>
