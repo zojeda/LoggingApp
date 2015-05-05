@@ -27,11 +27,16 @@
       });
   });
 
+  module.config(['progressArcDefaultsProvider', function (progressArcDefaultsProvider) {
+    progressArcDefaultsProvider
+        .setDefault('background', '#aaa')
+        .setDefault('size', 300);
+  }])
   module.run(['gridsterConfig', function(gridsterConfig) {
     gridsterConfig.rowHeight = 50;
   }]);
 
 }(angular.module("analysis", [
   'ui.router',
-  'smart-table', 'angular-progress-arc', 'chart.js', 'gridster'
+  'smart-table', 'highcharts-ng', 'angular-progress-arc', 'gridster'
 ])));

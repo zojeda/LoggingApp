@@ -31,8 +31,4 @@ angular.module('loggingApp', ['ui.router', 'ui.bootstrap', 'MessageCenterModule'
     }
     return myIoSocket;
   })
-  .config(['progressArcDefaultsProvider', function (progressArcDefaultsProvider) {
-    progressArcDefaultsProvider
-        .setDefault('background', '#aaa')
-        .setDefault('size', 300);
-  }]);
+  ;
