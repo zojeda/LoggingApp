@@ -5,6 +5,8 @@
     $scope.chartConfig = {
       options: {
         chart: {
+          width: $scope.widgetUI.contentWidth,
+          height: $scope.widgetUI.contentHeight-10,
           zoomType: 'x'
         },
         rangeSelector: {
@@ -18,11 +20,13 @@
         id: 1,
         data: []
       }],
-      title: {
-        text: 'Hello'
-      },
       useHighStocks: true
     };
+    $scope.$on('widgetResize', function() {
+      $scope.chartConfig.options.chart.width = $scope.widgetUI.contentWidth-10;
+      $scope.chartConfig.options.chart.height = $scope.widgetUI.contentHeight-15;
+    });
+
     $scope.$on('analyze', function(event) {
       $scope.labels = [];
       $scope.data = [
@@ -42,14 +46,14 @@
         .onAllDataReady(function(data) {
           $scope.withData = false;
           $scope.chartConfig.series = [{
-            id: 1,
-            data: []
-          }],
+              id: 1,
+              data: []
+            }],
 
-          $timeout(function() {
-            self.updateData(data);
-            $scope.$apply();
-          }, 100);
+            $timeout(function() {
+              self.updateData(data);
+              $scope.$apply();
+            }, 100);
 
         });
       $scope.series = [$scope.model.dataSettings.portfolioName];

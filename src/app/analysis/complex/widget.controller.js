@@ -2,10 +2,12 @@
 angular.module('analysis').controller('WidgetController', ['$scope', '$modal',
   function($scope, $modal) {
 
-    $scope.widgetFullWidth = 0;
-		$scope.widgetFullHeight = 0;
-		$scope.widgetContentWidth = 0;
-		$scope.widgetContentHeight = 0;
+    $scope.widgetUI = {
+      fullWidth: 0,
+  		fullHeight: 0,
+  		contentWidth: 0,
+  		contentHeight: 0
+    };
 
 		$scope.$on('gridster-item-initialized', function(item) {
 			$scope.syncWidgetSize(item.targetScope.gridsterItem);
@@ -17,10 +19,11 @@ angular.module('analysis').controller('WidgetController', ['$scope', '$modal',
 
 
     $scope.syncWidgetSize = function(gridsterItem) {
-			$scope.widgetFullWidth = gridsterItem.getElementSizeX();
-			$scope.widgetFullHeight = gridsterItem.getElementSizeY();
-			$scope.widgetContentWidth = $scope.widgetFullWidth - 27;
-			$scope.widgetContentHeight = $scope.widgetFullHeight - 50;
+			$scope.widgetUI.fullWidth = gridsterItem.getElementSizeX();
+			$scope.widgetUI.fullHeight = gridsterItem.getElementSizeY();
+			$scope.widgetUI.contentWidth = $scope.widgetUI.fullWidth - 27;
+			$scope.widgetUI.contentHeight = $scope.widgetUI.fullHeight - 60;
+      $scope.$broadcast('widgetResize', $scope.widgetUI);
     }
 
     $scope.remove = function(widget) {
@@ -28,7 +31,6 @@ angular.module('analysis').controller('WidgetController', ['$scope', '$modal',
     };
 
     $scope.openSettings = function(widget) {
-      console.log($scope.gridsterItem);
       $modal.open({
         scope: $scope,
         templateUrl: widget.settingsTemplate,

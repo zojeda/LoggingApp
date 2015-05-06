@@ -1,18 +1,26 @@
 (function(module) {
   'use strict';
   module.controller('PieChartCtrl', function($scope, $state, $timeout, processCallService) {
+    $scope.chartWidth = $scope.widgetFullWidth-60,
     $scope.chartConfig = {
       options: {
         chart: {
+          width:  $scope.widgetUI.contentWidth-10,
+          height: $scope.widgetUI.contentHeight-15,
           type: 'pie'
         }
       },
       series: [{ data: [] }],
       title: {
-        text: 'Hello'
+        text: undefined
       },
       loading: false
     };
+
+    $scope.$on('widgetResize', function() {
+      $scope.chartConfig.options.chart.width = $scope.widgetUI.contentWidth-10;
+      $scope.chartConfig.options.chart.height = $scope.widgetUI.contentHeight-15;
+    });
 
     $scope.$on('analyze', function(event) {
       $scope.progress = 0;

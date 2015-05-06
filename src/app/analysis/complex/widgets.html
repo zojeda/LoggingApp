@@ -11,13 +11,13 @@
           </div>
         </div>
         <div class="box-content">
-          <div ng-include="widget.template" class="widget" ng-style="{height: widgetContentHeight+'px'}"></div>
+          <div ng-include="widget.template" class="widget" ng-style="{height: widgetUI.contentHeight+'px'}"></div>
           <div class="box-header" ng-style="{height: '20px', bottom:'3px', width:'100%'}">
-                {{  widgetFullWidth }} -
-                {{widgetFullHeight }} -
+                {{  widgetUI.fullWidth }} -
+                {{widgetUI.fullHeight }} -
 
-                {{widgetContentWidth }} -
-                {{	widgetContentHeight }}
+                {{widgetUI.contentWidth }} -
+                {{	widgetUI.contentHeight }}
           </div>
         </div>
       </div>
